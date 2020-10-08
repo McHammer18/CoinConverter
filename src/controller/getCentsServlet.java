@@ -9,11 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.CoinConverter;
+
 /**
  * Servlet implementation class getCentsServlet
  */
 @WebServlet("/getCentsServlet")
 public class getCentsServlet extends HttpServlet {
+	
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -29,10 +33,14 @@ public class getCentsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userCents = request.getParameter("userCents");
+		CoinConverter userCoins = new CoinConverter(Integer.parseInt(userCents));
+		request.setAttribute("userCoinPouch",  userCoins);
+		getServletContext().getRequestDispatcher("/result.jsp").forward(request, response);
+		//PrintWriter writer = response.getWriter();
+		//writer.println(userCoins.toString());
+		//writer.close();
 		
-		PrintWriter writer = response.getWriter();
-		writer.println(userCents.toString());
-		writer.close();
+
 	}
 
 }
